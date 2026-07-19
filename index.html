@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshop · Onboardings &amp; déploiements · Vocca</title>
+<link rel="icon" type="image/png" href="vocca-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#EDEBE5; --beige:#F4F2EF; --haze:#DBE4EA;
+    --blue:#3568F6; --navy:#0B355F; --ink:#111011; --white:#fff;
+    --muted:#5c6b7a; --line:rgba(11,53,95,.12); --line2:rgba(11,53,95,.08);
+    --blue-soft:#e6ecfe; --blue-tint:#f1f5ff; --warm:#f6eddc; --warm-line:#e5c896; --warm-ink:#8a5a24;
+    --serif:"Crimson Pro",Georgia,serif; --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--linen);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--blue)}
+
+  /* Hero */
+  header.hero{padding:56px 0 26px}
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:30px}
+  .brand img{display:block}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+  h1{font-family:var(--serif);font-weight:600;font-size:44px;line-height:1.09;letter-spacing:-.015em;color:var(--navy);margin:12px 0 14px}
+  .sub{color:var(--muted);font-size:16px;max-width:660px}
+  .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;font-size:13px;color:var(--muted)}
+  .meta b{color:var(--navy);font-weight:600}
+  .wire{width:100%;height:32px;margin:24px 0 2px;opacity:.9}
+
+  /* Agenda cards */
+  .agenda{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 8px}
+  .ag{background:var(--white);border:1px solid var(--line2);border-radius:16px;padding:18px 18px 16px;text-decoration:none;color:inherit;transition:.15s;display:block}
+  .ag:hover{border-color:var(--blue);transform:translateY(-2px)}
+  .ag .k{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--blue);line-height:1}
+  .ag h4{margin:10px 0 4px;font-size:15px;font-weight:600;color:var(--navy)}
+  .ag p{margin:0;font-size:12.5px;color:var(--muted)}
+
+  /* Part header */
+  .part{margin-top:56px;padding-top:6px}
+  .part-tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  .part h2{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--navy);letter-spacing:-.015em;margin:6px 0 0}
+
+  /* Section */
+  section{margin-top:34px;scroll-margin-top:20px}
+  h3{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--navy);letter-spacing:-.01em;margin:0 0 4px;display:flex;align-items:baseline;gap:11px}
+  h3 .num{font-size:14px;font-weight:700;color:var(--blue);font-family:var(--sans);background:var(--blue-soft);border-radius:8px;padding:2px 9px;flex:none}
+  .lead{color:var(--muted);font-size:14px;margin:2px 0 16px}
+
+  h4.sub-h{font-size:15px;font-weight:700;color:var(--navy);margin:22px 0 8px;letter-spacing:-.005em}
+
+  /* Card */
+  .card{background:var(--white);border:1px solid var(--line2);border-radius:16px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 2px rgba(11,53,95,.04)}
+  .card h5{margin:0 0 4px;font-size:15px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .card p{margin:6px 0 0;color:var(--muted);font-size:13.7px}
+  .card p:first-child{margin-top:0}
+  .card ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13.7px}
+  .card ul li{margin:3px 0}
+
+  /* Callouts */
+  .callout{border-radius:14px;padding:14px 16px;margin:12px 0;font-size:13.7px}
+  .callout .cl-t{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+  .callout p{margin:0;color:var(--ink)}
+  .callout.info{background:var(--blue-tint);border:1px solid rgba(53,104,246,.22)}
+  .callout.info .cl-t{color:var(--blue)}
+  .callout.warn{background:var(--warm);border:1px solid var(--warm-line)}
+  .callout.warn .cl-t{color:var(--warm-ink)}
+  .callout.note{background:var(--beige);border:1px solid var(--line2)}
+  .callout.note .cl-t{color:var(--navy)}
+
+  /* Steps */
+  ol.steps{list-style:none;counter-reset:s;margin:10px 0 0;padding:0}
+  ol.steps>li{counter-increment:s;position:relative;padding:0 0 4px 40px;margin-bottom:12px}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-2px;width:27px;height:27px;border-radius:50%;
+    background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  ol.steps>li b{color:var(--navy)}
+  ol.steps>li .d{color:var(--muted);font-size:13.7px}
+
+  /* Checklist */
+  .checklist{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:10px 0 0;padding:0;list-style:none}
+  .checklist li{position:relative;padding-left:24px;font-size:13.7px;color:var(--ink)}
+  .checklist li::before{content:"";position:absolute;left:0;top:6px;width:13px;height:13px;border-radius:4px;background:var(--haze);box-shadow:inset 0 0 0 1.5px var(--blue)}
+
+  /* Table */
+  .tbl{width:100%;border-collapse:collapse;margin:12px 0 0;font-size:13.5px;overflow:hidden;border-radius:12px;border:1px solid var(--line2)}
+  .tbl th{background:var(--navy);color:#fff;text-align:left;padding:10px 14px;font-weight:600;font-size:12.5px}
+  .tbl td{padding:11px 14px;border-top:1px solid var(--line2);color:var(--muted);vertical-align:top}
+  .tbl td b{color:var(--navy)}
+  .tbl tr:nth-child(even) td{background:var(--beige)}
+
+  /* Pills */
+  .pills{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.02em}
+  .pA{color:var(--blue);background:var(--blue-soft)} /* auto */
+  .pM{color:var(--warm-ink);background:var(--warm)} /* manuel */
+  .eta{color:var(--navy);background:var(--beige);box-shadow:inset 0 0 0 1px var(--line2);font-weight:600}
+  .done{color:var(--navy);background:var(--haze)}
+
+  /* Coming lists */
+  .grp{margin-bottom:8px}
+  .grp .gh{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:18px 0 8px}
+  .rowlist{list-style:none;margin:0;padding:0}
+  .rowlist li{background:var(--white);border:1px solid var(--line2);border-radius:12px;padding:12px 15px;margin-bottom:8px;font-size:13.7px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .rowlist li .tx{color:var(--ink)} .rowlist li .tx b{color:var(--navy)}
+
+  /* FAQ */
+  details.faq{background:var(--white);border:1px solid var(--line2);border-radius:14px;margin-bottom:10px;overflow:hidden}
+  details.faq summary{cursor:pointer;padding:15px 18px;font-weight:600;font-size:14.5px;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"+";font-size:20px;color:var(--blue);font-weight:400;flex:none}
+  details.faq[open] summary::after{content:"–"}
+  details.faq .a{padding:0 18px 16px;color:var(--muted);font-size:13.7px}
+  details.faq .a b{color:var(--navy)}
+  .draft{font-size:11px;font-weight:700;color:var(--warm-ink);background:var(--warm);padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+  footer .cc{font-family:var(--serif);color:var(--navy)}
+  @media (max-width:640px){ .agenda{grid-template-columns:1fr} .checklist{grid-template-columns:1fr} h1{font-size:32px} .card h5{flex-direction:column} .rowlist li{flex-direction:column} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><img src="vocca-logo.png" alt="Vocca" width="152" height="40"></div>
+    <div class="eyebrow">Workshop · Ops &amp; AM</div>
+    <h1>Onboardings &amp; déploiements</h1>
+    <p class="sub">Alignement sur les points remontés plusieurs fois, la marche à suivre pour créer et gérer les onboardings, ce qui est déjà en place et ce qui arrive pour vous simplifier la vie.</p>
+    <div class="meta">
+      <span><b>Animé par</b> · Aurélien Bartoletti</span>
+      <span><b>Pour</b> · équipes Ops &amp; AM</span>
+    </div>
+    <svg class="wire" viewBox="0 0 900 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 16 H285 L303 16 325 5 345 27 363 16 H535 L553 16 571 3 589 29 607 16 H900"
+        fill="none" stroke="#3568F6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+    </svg>
+  </header>
+
+  <!-- AGENDA -->
+  <div class="agenda">
+    <a class="ag" href="#part1"><div class="k">1</div><h4>Points remontés &amp; marche à suivre</h4><p>Les deux modèles, les onboardings auto vs manuels, et les deals groupés.</p></a>
+    <a class="ag" href="#part2"><div class="k">2</div><h4>Déjà fait &amp; à venir</h4><p>Ce qui est en place et ce qui arrive d'ici deux mois pour vous faciliter la vie.</p></a>
+    <a class="ag" href="#part3"><div class="k">3</div><h4>FAQ</h4><p>Les questions fréquentes — à compléter ensemble pendant le workshop.</p></a>
+  </div>
+
+  <!-- ============ PART 1 ============ -->
+  <div class="part" id="part1">
+    <div class="part-tag">Partie 1</div>
+    <h2>Points remontés &amp; marche à suivre</h2>
+  </div>
+
+  <!-- 1. Deux modèles -->
+  <section id="s1">
+    <h3><span class="num">1</span> Le fonctionnement des deux modèles</h3>
+    <p class="lead">Migration en cours — pourquoi il y a encore deux façons de faire, et où on va.</p>
+
+    <div class="card">
+      <h5>Ancien modèle</h5>
+      <p>Les déploiements étaient portés <b>au niveau du deal</b>, en même temps que l'effort commercial — et parfois des deals étaient créés <b>uniquement</b> pour représenter un déploiement.</p>
+    </div>
+    <div class="card">
+      <h5>Nouveau modèle</h5>
+      <p>Le fonctionnement actuel, celui que vous connaissez pour la plupart, et qui est détaillé dans toute la suite de cette page.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="cl-t">🎯 Objectif de la migration</div>
+      <p>Basculer tous les « déploiements » historiquement portés par des deals (ou les cas où les deux coexistent dans le même objet) vers le nouveau modèle, pour avoir <b>une seule source de vérité</b>.</p>
+    </div>
+    <div class="callout warn">
+      <div class="cl-t">⚠️ Pendant la transition</div>
+      <p>Il peut y avoir, temporairement, des <b>companies sans déploiement</b> alors qu'elles devraient en avoir. Ces écarts seront rattrapés prochainement. Pour finaliser proprement, j'aurai besoin de vous pour <b>cadrer et valider</b> la cohérence, avant un dernier « coup de pinceau » (contrôles et ajustements finaux).</p>
+    </div>
+    <div class="callout note">
+      <div class="cl-t">✅ En attendant — la règle</div>
+      <p>Plus d'ancien modèle pour les onboardings : on <b>rattache la company au groupe et au contrat cadre</b>, on crée le deal et la company avec toutes les informations nécessaires.</p>
+    </div>
+  </section>
+
+  <!-- 2. Onboardings auto vs manuel -->
+  <section id="s2">
+    <h3><span class="num">2</span> Le fonctionnement des onboardings</h3>
+    <p class="lead">Création automatique vs manuelle.</p>
+
+    <div class="callout info">
+      <div class="cl-t">📖 Définition</div>
+      <p>Chez Vocca, un <b>onboarding</b> (record dans l'objet « onboarding ») représente un <b>déploiement</b> : le déploiement d'un produit et/ou le déploiement d'une compagnie correspond à un déploiement.</p>
+    </div>
+
+    <h4 class="sub-h">2.1 · Cas de création automatique <span class="pill pA" style="margin-left:6px">Automatique</span></h4>
+    <div class="card">
+      <h5>Deal groupé — le groupe paye</h5>
+      <ul>
+        <li><b>Condition :</b> le Sales a renseigné les centres en amont.</li>
+        <li><b>Conséquence :</b> une fois le deal gagné, les onboardings sont créés selon le nombre de centres.</li>
+      </ul>
+      <div class="callout warn" style="margin-bottom:0">
+        <div class="cl-t">⚠️ Point d'attention</div>
+        <p>L'assignation à un Ops ne se fait <b>que si le groupe a déjà un Ops</b>. Sinon, l'onboarding reste <b>non assigné</b>.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h5>Deal sur une entreprise — entreprise closée</h5>
+      <p>Un onboarding est créé automatiquement, avec une assignation selon l'ARR :</p>
+      <table class="tbl">
+        <tr><th>ARR</th><th>Assignation</th></tr>
+        <tr><td><b>&lt; ~5k</b></td><td>Attribué au <b>Sales</b>.</td></tr>
+        <tr><td><b>&gt; ~5k</b></td><td>Selon la tranche (<b>Medium</b> ou <b>High</b>) — <b>Julie</b> l'assigne manuellement à un Ops (pour l'instant).</td></tr>
+      </table>
+    </div>
+
+    <h4 class="sub-h">2.2 · Cas nécessitant une création manuelle <span class="pill pM" style="margin-left:6px">Manuel</span></h4>
+    <div class="card">
+      <p>Aujourd'hui, certains onboardings ne se créent pas automatiquement et doivent être créés à la main :</p>
+      <ol class="steps">
+        <li><span class="d"><b>Deal groupé sans centres</b> — le Sales n'a pas créé les centres avant de valider le deal (voir <a href="#s4">section 4</a>).</span></li>
+        <li><span class="d"><b>Upsell</b> potentiel d'un produit.</span></li>
+        <li><span class="d"><b>Cross-sell</b> — ajout d'un nouveau centre par rapport à un groupe, ou déploiement d'un nouveau service dans un EPIC / ESPIC (ex. Fondation Rothschild).</span></li>
+      </ol>
+      <div class="callout note" style="margin-bottom:0">
+        <div class="cl-t">🔮 À terme</div>
+        <p>Ces cas devraient être automatisés quand il y aura des « motions sales » et un process associé — ce n'est pas encore le cas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Créer un onboarding -->
+  <section id="s3">
+    <h3><span class="num">3</span> Créer un onboarding — la marche à suivre</h3>
+    <p class="lead">Comment faire, et les points d'attention.</p>
+
+    <h4 class="sub-h">3.1 · Deux manières de créer</h4>
+    <div class="card">
+      <ul>
+        <li>Depuis l'objet <b>« onboarding »</b> (création directe).</li>
+        <li>Depuis la <b>compagnie</b> qui représente l'onboarding (création depuis la compagnie).</li>
+      </ul>
+    </div>
+
+    <h4 class="sub-h">3.2 · Le minimum à renseigner</h4>
+    <div class="card">
+      <p>Toutes les valeurs ne sont pas toujours disponibles, mais il faut <b>quand même créer l'onboarding</b> en renseignant au minimum :</p>
+      <ul class="checklist">
+        <li>Ownership</li>
+        <li>Compagnie liée</li>
+        <li>Nom</li>
+        <li>Value (High / Medium / Low)</li>
+        <li>Contact associé</li>
+        <li>Étape du record — Vocca backlog</li>
+        <li>Estimated go live date</li>
+      </ul>
+      <div class="callout warn" style="margin-bottom:0">
+        <div class="cl-t">⚠️ Personnes liées</div>
+        <p>Pensez à renseigner les <b>personnes liées</b> si ce n'est pas fait automatiquement (ce n'est pas automatique aujourd'hui, mais c'est important — et ça devrait l'être bientôt).</p>
+      </div>
+    </div>
+
+    <h4 class="sub-h">3.3 · Ajouter l'onboarding à la « liste » (le process)</h4>
+    <div class="card">
+      <p>Une fois l'onboarding créé, il faut l'ajouter à la liste et le mettre à la bonne étape.</p>
+      <ul>
+        <li><b>L'onboarding</b> = l'ensemble des données du déploiement.</li>
+        <li><b>La liste</b> = le process (les étapes opérationnelles).</li>
+      </ul>
+      <p>Le point clé du process : <b>l'onboarding est-il géré par un Sales ou par un Ops ?</b> Les étapes ne sont pas les mêmes. Il y a aussi la notion de <b>connecteur</b> (normalement déjà en tête).</p>
+      <div class="callout info" style="margin-bottom:0">
+        <div class="cl-t">💡 Pourquoi c'est essentiel</div>
+        <p>C'est à partir de la liste que, quand l'onboarding passe en <b>Done</b>, tout le reste se déclenche : monitoring, étapes suivantes, notifications.</p>
+      </div>
+    </div>
+
+    <h4 class="sub-h">Rappel · Créer une company</h4>
+    <div class="card">
+      <p>Quand une company est créée, elle doit avoir a minima :</p>
+      <ul class="checklist">
+        <li>Un nom</li>
+        <li>Le type de la company</li>
+        <li>Le rattachement au groupe</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Deal groupé sans centres -->
+  <section id="s4">
+    <h3><span class="num">4</span> Le Sales n'a pas créé les centres dans un deal groupé</h3>
+    <p class="lead">Que faire ? La procédure pas à pas.</p>
+
+    <h4 class="sub-h">4.1 · Clarifier le contexte</h4>
+    <div class="card">
+      <p>D'abord, poser les bonnes questions :</p>
+      <ul>
+        <li>« OK, quels sont les centres concernés ? »</li>
+        <li>Est-ce un <b>contrat cadre</b> ?</li>
+        <li>Est-ce <b>tous</b> les centres ou seulement une <b>partie</b> ?</li>
+      </ul>
+      <p>Si la consigne est « on ne lance que deux centres pour l'instant » → vous créez <b>uniquement ces deux centres</b>. Si c'est un <b>contrat cadre</b> → vous créez <b>tous les centres</b>.</p>
+      <div class="callout note" style="margin-bottom:0"><div class="cl-t">📄 Doc</div><p>Il existe de la documentation pour faire cette création rapidement (à partager / présenter).</p></div>
+    </div>
+
+    <h4 class="sub-h">4.2 · Informations à renseigner</h4>
+    <div class="card">
+      <p>Le minimum déjà vu, plus — potentiellement — le <b>SIREN / SIRET pour chaque centre</b> (important).</p>
+    </div>
+
+    <h4 class="sub-h">4.3 · Créer les centres (practices) au niveau du groupe</h4>
+    <div class="card">
+      <ol class="steps">
+        <li><span class="d">Aller sur la <b>compagnie du groupe</b>.</span></li>
+        <li><span class="d">Ouvrir la section <b>« Practice »</b>.</span></li>
+        <li><span class="d">Créer les compagnies avec les <b>templates</b>.</span></li>
+      </ol>
+      <p style="margin-top:10px"><i>Alternative :</i> via la documentation / l'outillage dédié que je vous donnerai.</p>
+    </div>
+
+    <h4 class="sub-h">4.4 · Rattacher les centres au deal group</h4>
+    <div class="card">
+      <p>Une fois toutes les compagnies (centres) créées et rattachées au groupe :</p>
+      <ol class="steps">
+        <li><span class="d">Aller dans la vue <b>« All »</b> des compagnies.</span></li>
+        <li><span class="d"><b>Filtrer</b> sur le groupe.</span></li>
+        <li><span class="d">Ajouter le champ <b>« Deal »</b> (relation).</span></li>
+        <li><span class="d">Sélectionner le <b>deal</b> (et le DT) pour l'ensemble des centres.</span></li>
+      </ol>
+      <div class="callout warn" style="margin-bottom:0">
+        <div class="cl-t">⚠️ Lifecycle</div>
+        <p>Chaque centre doit avoir le bon <b>Lifecycle</b> et <b>Customer Lifecycle</b> pour s'y repérer. Centres déjà signés et en onboarding (contrat cadre) → mettre <b>Customer + Onboarding</b> sur chacun.</p>
+      </div>
+    </div>
+
+    <h4 class="sub-h">4.5 · Cas particulier — contrat cadre sans onboarding (cross-sell à venir)</h4>
+    <div class="card">
+      <p>Si c'est un contrat cadre, qu'il n'y a pas encore d'onboarding, que les centres n'ont pas été créés et qu'il va y avoir du cross-sell à aller chercher :</p>
+      <ul>
+        <li>Vous créez la <b>compagnie (centre)</b>.</li>
+        <li>Il n'y a <b>pas de rattachement à ce deal-là</b> en particulier.</li>
+        <li>Un <b>deal spécifique</b> sera à créer sur la compagnie.</li>
+      </ul>
+    </div>
+
+    <h4 class="sub-h">4.6 · Facturation — point de vigilance</h4>
+    <div class="card">
+      <p>Les compagnies doivent respecter la logique de facturation, en <b>3 points</b> :</p>
+      <ol class="steps">
+        <li><span class="d"><b>Qui paye</b></span></li>
+        <li><span class="d"><b>Type de facturation</b></span></li>
+        <li><span class="d"><b>Relation</b></span></li>
+      </ol>
+      <table class="tbl">
+        <tr><th>Cas</th><th>Réglage</th></tr>
+        <tr><td><b>Le groupe paye</b><br>(standard)</td><td>Le groupe a <b>Payeur = true</b>. Les practices sont en <b>group invoice</b> — ou en <b>individual invoice</b> uniquement si le client a explicitement demandé un détail des factures pour tous ses centres (cas spécifique, lié à des subscriptions rattachées au groupe). Sinon, pas de problème particulier.</td></tr>
+        <tr><td><b>Les practices payent</b></td><td>Chaque practice a <b>Payeur = true</b>.</td></tr>
+      </table>
+      <div class="callout info" style="margin-bottom:0">
+        <div class="cl-t">🪞 Pourquoi ce « miroir »</div>
+        <p>Ce miroir de facturation dans Attio est essentiel : si le modèle évolue (qui paye, business model…), on conserve les <b>bonnes relations entre les bonnes entités</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <div class="part" id="part2">
+    <div class="part-tag">Partie 2</div>
+    <h2>Déjà fait &amp; à venir</h2>
+    <p class="lead" style="margin-top:8px">Ce qui est en place pour vous faciliter la vie — et ce qui arrive d'ici deux mois.</p>
+  </div>
+
+  <section>
+    <h4 class="sub-h">✅ Ce qui a été fait</h4>
+    <ul class="rowlist">
+      <li><span class="tx"><b>Lead gen</b> — trouver les groupes et les centres en amont et vous permettre de les ajouter facilement via des skills, pour ne pas vous faire perdre de temps. Chaque génération de leads est un gros travail de repérage, déjà en partie fait pour vous.</span><span class="pills"><span class="pill done">Fait</span></span></li>
+      <li><span class="tx"><b>Migration de modèle &amp; cleaning</b> — ARR nettoyé en partie (visibilité sur le déployé, l'en-cours…), préparation de la migration pour une vision unifiée et le cadrage ARR, et rattrapage des configs absentes du CRM.</span><span class="pills"><span class="pill done">En cours</span></span></li>
+      <li><span class="tx"><b>Agent Allo &lt;&gt; CRM</b> — capture des tâches à faire, relances prémâchées, incohérences, personnes absentes du CRM, et un premier contexte dans chaque onboarding.</span><span class="pills"><span class="pill done">Fait</span></span></li>
+      <li><span class="tx"><b>Portefeuille AM</b> — rattrapage dans le CRM de tout ce qui était possible, et création d'un <b>MVP de performance score</b>.</span><span class="pills"><span class="pill done">Fait</span></span></li>
+    </ul>
+
+    <h4 class="sub-h">🔜 D'ici deux mois</h4>
+
+    <div class="grp"><div class="gh">Architecture</div>
+      <ul class="rowlist">
+        <li><span class="tx"><b>Finir la migration de modèle</b> — enfin une source de vérité + rattrapage des configs en company/déploiement pour les AM/Ops.</span><span class="pills"><span class="pill eta">Avant fin juillet (partie 1)</span></span></li>
+        <li><span class="tx"><b>Cadrage ARR &amp; finalisation</b> — la vraie donnée + le flow.</span><span class="pills"><span class="pill eta">Début août</span></span></li>
+        <li><span class="tx"><b>Objet « service »</b> — retranscrire les services d'hôpitaux et cliniques pour faciliter la visibilité upsell côté AM (savoir qu'on a lancé x services sur telle clinique / hôpital).</span></li>
+        <li><span class="tx"><b>Rattrapage des services</b> — lors du lancement de la lead gen libéral (clinique, SCM) et ESPIC.</span></li>
+        <li><span class="tx"><b>Faire remonter les produits</b> dans le CRM.</span></li>
+        <li><span class="tx"><b>Faire remonter les invoices</b> dans le CRM.</span></li>
+      </ul>
+    </div>
+
+    <div class="grp"><div class="gh">Enablement</div>
+      <ul class="rowlist">
+        <li><span class="tx"><b>Skills Ops</b> — création de company &amp; d'onboarding en masse.</span></li>
+        <li><span class="tx"><b>Skills AM</b> — trouver les centres manquants.</span></li>
+        <li><span class="tx"><b>Portefeuille AM dans le CRM</b> avec toutes les informations.</span></li>
+        <li><span class="tx"><b>Nouveau performance score</b>.</span></li>
+        <li><span class="tx"><b>Handoff AM</b> avec MBR facilité.</span></li>
+        <li><span class="tx"><b>Agent meeting</b> — capture l'ensemble de vos discussions pour proposer des tâches, des personnes à ajouter au CRM, des relances…</span></li>
+        <li><span class="tx"><b>Agent call 2.0</b> — capture les données à mettre à jour dans le CRM, création d'opportunités upsell / cross-sell selon les calls.</span></li>
+        <li><span class="tx"><b>Agent meeting 2.0</b> — comme l'agent call, côté réunions.</span></li>
+        <li><span class="tx"><b>Agent cleaner</b> — scanner les manquements sur vos ownerships dans le CRM à nettoyer.</span></li>
+      </ul>
+    </div>
+
+    <div class="grp"><div class="gh">Motions</div>
+      <ul class="rowlist">
+        <li><span class="tx"><b>Upsell &amp; Cross-sell</b> — vraies étapes, process, ownership, automatisation, déclenchements.</span></li>
+        <li><span class="tx"><b>POC</b> — comment on flague les POCs.</span></li>
+        <li><span class="tx"><b>Contrat cadre</b> — comment on le flague, quels impacts sur les déploiements.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <div class="part" id="part3">
+    <div class="part-tag">Partie 3</div>
+    <h2>FAQ</h2>
+    <p class="lead" style="margin-top:8px">Questions fréquentes — <span class="draft">brouillon à compléter au workshop</span></p>
+  </div>
+
+  <section>
+    <details class="faq"><summary>Une company n'a pas de déploiement alors qu'elle devrait — c'est normal ?</summary>
+      <div class="a">Oui, temporairement. C'est un écart lié à la migration de modèle en cours ; ces cas seront rattrapés prochainement. Si vous en repérez, remontez-les pour aider au cadrage.</div></details>
+
+    <details class="faq"><summary>Le deal groupé est gagné mais aucun onboarding n'a été créé — pourquoi ?</summary>
+      <div class="a">Parce que les <b>centres n'ont pas été renseignés en amont</b>. La création automatique des onboardings dépend de la présence des centres. Il faut alors les créer manuellement — voir la <a href="#s4">section 4</a>.</div></details>
+
+    <details class="faq"><summary>Mon onboarding auto n'est pas assigné à un Ops — bug ?</summary>
+      <div class="a">Non. Sur un deal groupé, l'assignation à un Ops ne se fait que si <b>le groupe a déjà un Ops</b>. Sinon l'onboarding reste non assigné jusqu'à attribution.</div></details>
+
+    <details class="faq"><summary>Qui assigne les onboardings au-dessus de ~5k ARR ?</summary>
+      <div class="a"><b>Julie</b>, manuellement, pour l'instant (selon la tranche Medium ou High). En dessous de ~5k ARR, c'est attribué au Sales automatiquement.</div></details>
+
+    <details class="faq"><summary>Où indiquer qui paye (groupe vs centres) ?</summary>
+      <div class="a">Via la logique de facturation en 3 points (qui paye / type de facturation / relation). Standard : le <b>groupe a Payeur = true</b> et les practices sont en group invoice. Si les practices payent, chacune a Payeur = true. Détails en <a href="#s4">section 4.6</a>.</div></details>
+
+    <details class="faq"><summary>Contrat cadre sans onboarding : que faire des centres ?</summary>
+      <div class="a">Vous créez la compagnie (centre), <b>sans la rattacher à ce deal</b>. Un deal spécifique sera créé sur la compagnie quand le cross-sell sera concrétisé — voir <a href="#s4">section 4.5</a>.</div></details>
+
+    <div class="callout note" style="margin-top:14px">
+      <div class="cl-t">✍️ À compléter</div>
+      <p>Ajoutez ici les questions posées pendant le workshop et leurs réponses. Envoyez-les moi et je les intègre.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="cc">Vocca ©</span> — Support de workshop préparé par Aurélien Bartoletti pour les équipes Ops &amp; AM. Onboardings &amp; déploiements.
+  </footer>
+</div>
+</body>
+</html>
